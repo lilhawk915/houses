@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Bradley 28x48 — 3D Walkthrough</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Cpath d=%22M1 8 8 2l7 6v7H1z%22 fill=%22%233e4a44%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.min.js", "three/addons/": "./vendor/jsm/" } }
+</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="loading">
+  <div class="card">
+    <div class="title" id="load-title">Loading house…</div>
+    <div class="bar"><div id="load-bar"></div></div>
+    <div class="sub" id="load-sub">Downloading model</div>
+  </div>
+</div>
+
+<header id="hud-top">
+  <div class="name" id="house-name">Bradley 28x48</div>
+  <div class="room" id="room-name">—</div>
+</header>
+
+<canvas id="minimap" width="300" height="180" aria-label="Floor plan minimap. Click a room to go there."></canvas>
+
+<div id="crosshair"></div>
+<div id="measure-label" class="hidden"></div>
+<div id="hint" class="hidden"></div>
+
+<div id="joystick" class="hidden"><div id="stick"></div></div>
+
+<nav id="toolbar">
+  <button id="btn-tour" title="Guided tour (T)"><span>▶</span>Tour</button>
+  <button id="btn-walk" class="on" title="Walk (W A S D + mouse)"><span>⌖</span>Walk</button>
+  <button id="btn-doll" title="Dollhouse view (O)"><span>⌂</span>Dollhouse</button>
+  <button id="btn-measure" title="Tape measure (M)"><span>↔</span>Measure</button>
+  <button id="btn-layers" title="Show / hide roof, ceilings, furniture"><span>◫</span>Layers</button>
+  <button id="btn-help" title="Help (?)"><span>?</span>Help</button>
+</nav>
+<div id="layers" class="hidden">
+  <button id="tg-roof" class="tg on" title="Roof (R)"><i></i>Roof</button>
+  <button id="tg-ceil" class="tg on" title="Ceilings (C)"><i></i>Ceilings</button>
+  <button id="tg-furn" class="tg on" title="Furniture (F)"><i></i>Furniture</button>
+</div>
+
+<div id="tour-bar" class="hidden"><div id="tour-progress"></div></div>
+
+<div id="help" class="hidden">
+  <div class="card">
+    <h2>How to look around</h2>
+    <p><b>Walk:</b> click the view, then move with <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or the arrow keys and look with the mouse. Hold <kbd>Shift</kbd> to walk faster. <kbd>Esc</kbd> frees the mouse.</p>
+    <p><b>Phone:</b> drag the left circle to walk, drag anywhere else to look.</p>
+    <p><b>Tour:</b> plays the same path as the video. Touch anything to take over.</p>
+    <p><b>Dollhouse:</b> see the whole house from above with the roof off. Drag to spin, pinch or scroll to zoom.</p>
+    <p><b>Map:</b> click a room on the map to jump there.</p>
+    <p><b>Measure:</b> click two points to read the distance. Click again to start a new measurement.</p>
+    <button id="help-close">Got it</button>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
