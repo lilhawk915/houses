@@ -459,10 +459,33 @@ mm.addEventListener("click", (e) => {
   setMode("walk"); hint(room.name);
 });
 
+// ---------------------------------------------------------------- front door: swings open on the tour, and when you walk up
+const doorMeta = lmMeta.__door__, doorNode = doorMeta ? groups[doorMeta.node] : null;
+const doorQ0 = doorNode ? doorNode.quaternion.clone() : null, doorAxis = new THREE.Vector3(0, 1, 0), doorQ = new THREE.Quaternion();
+let doorDeg = 0;
+function setDoor(deg) {
+  if (!doorNode) return;
+  doorDeg = deg;
+  doorQ.setFromAxisAngle(doorAxis, THREE.MathUtils.degToRad(deg) * doorMeta.sgn);
+  doorNode.quaternion.copy(doorQ0).premultiply(doorQ);
+}
+function doorForTour(t) {   // same timing as the rendered video: closed, ease open, stay open
+  if (!doorMeta || !doorMeta.open) return 0;
+  const [t0, t1] = doorMeta.open, u = Math.min(1, Math.max(0, (t - t0) / Math.max(0.1, t1 - t0)));
+  return doorMeta.deg * u * u * (3 - 2 * u);
+}
+function doorForWalk(dt) {  // open when you come within ~7 ft of the hinge, close again when you leave
+  if (!doorMeta) return;
+  const near = Math.hypot(me.x - doorMeta.hinge[0], me.y - doorMeta.hinge[1]) < 84;
+  const target = near ? doorMeta.deg : 0;
+  setDoor(doorDeg + (target - doorDeg) * Math.min(1, dt * 3.0));
+}
+
 // ---------------------------------------------------------------- main loop
 const clock = new THREE.Clock();
 let lastRoom = null;
 function tick() {
+  if (mode === "capture") return;                 // video capture drives rendering itself (window.__p2w.capture)
   const dt = Math.min(0.05, clock.getDelta());
   if (mode === "walk") {
     const f = (keys.has("KeyW") || keys.has("ArrowUp") ? 1 : 0) - (keys.has("KeyS") || keys.has("ArrowDown") ? 1 : 0) - joy.y;
@@ -476,8 +499,10 @@ function tick() {
     const target = floorAt(me.x, me.y) + data.eye;
     eyeZ += (target - eyeZ) * Math.min(1, dt * 6);
     applyCamera();
+    doorForWalk(dt);
   } else if (mode === "tour") {
     tourT += dt;
+    setDoor(doorForTour(tourT));
     const p = tourPose(tourT);
     me.x = p.x; me.y = p.y; me.yaw = p.yaw; me.pitch = p.pitch; eyeZ = p.z;
     applyCamera();
@@ -502,7 +527,30 @@ function tick() {
 }
 
 setVis(); applyCamera();
-window.__p2w = { me, setMode, roomAt,
+function faceBillboards() {
+  for (const b of billboards) {
+    const dx = camera.position.x - b.position.x, dz = camera.position.z - b.position.z;
+    b.rotation.set(0, Math.atan2(dx, dz), 0, "YXZ");
+  }
+}
+// Offline video capture: hide the UI, then render tour poses at exact times (no frame drops, any speed).
+const capture = {
+  get length() { return tourLen; },
+  begin(w, h) {
+    mode = "capture";
+    for (const el of document.body.children) if (el !== renderer.domElement) el.style.display = "none";
+    renderer.setPixelRatio(1); renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix();
+  },
+  frame(t, quality = 0.93) {
+    setDoor(doorForTour(t));
+    const p = tourPose(t);
+    me.x = p.x; me.y = p.y; me.yaw = p.yaw; me.pitch = p.pitch; eyeZ = p.z;
+    applyCamera(); faceBillboards();
+    renderer.render(scene, camera);
+    return renderer.domElement.toDataURL("image/jpeg", quality);   // read back in the same task as the draw
+  },
+};
+window.__p2w = { me, setMode, roomAt, capture,
   mat(name) { let r = null; houseRoot.traverse((o) => { if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => { if (m.name === name) r = m; }); }); return r; },
   pick(x, y, z) {   // plan inches; cast straight down, report what's drawn there
     ray.set(P(x, y, z), new THREE.Vector3(0, -1, 0));
@@ -510,7 +558,7 @@ window.__p2w = { me, setMode, roomAt,
     const m = Array.isArray(h.object.material) ? h.object.material[h.face.materialIndex] : h.object.material;
     const ga = Object.keys(h.object.geometry.attributes);
     return { attrs: ga, lmChannel: m.lightMap && m.lightMap.channel, uv1: h.uv1 && [h.uv1.x, h.uv1.y], mesh: h.object.name, mat: m.name, map: m.map && m.map.name, mapRepeat: m.map && [m.map.repeat.x, m.map.offset.y], lm: !!m.lightMap, color: m.color.getHexString(), uv: h.uv && [h.uv.x, h.uv.y] };
-  }, get mode() { return mode; }, get measure() { return $("measure-label").textContent; } };   // test hook
+  }, get door() { return doorDeg; }, get mode() { return mode; }, get measure() { return $("measure-label").textContent; } };   // test hook
 $("loading").classList.add("done");
 setTimeout(() => $("loading").remove(), 600);
 if (!localStorageGet("p2w-help-seen")) { $("help").classList.remove("hidden"); localStorageSet("p2w-help-seen", "1"); }
