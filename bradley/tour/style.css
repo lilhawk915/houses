@@ -1,0 +1,66 @@
+:root {
+  --ink: #1d2320; --paper: rgba(250, 249, 246, 0.92); --accent: #3e4a44; --accent2: #6f7c6b; --line: rgba(29, 35, 32, 0.14);
+  --pad: max(12px, env(safe-area-inset-left));
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #cfd8dc; font: 14px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--ink); }
+#c { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; outline: none; }
+
+#loading { position: fixed; inset: 0; display: grid; place-items: center; background: #e9ecea; z-index: 50; transition: opacity .5s; }
+#loading.done { opacity: 0; pointer-events: none; }
+.card { background: var(--paper); border-radius: 14px; padding: 20px 22px; box-shadow: 0 10px 40px rgba(0,0,0,.18); max-width: min(460px, calc(100vw - 32px)); }
+#loading .card { width: 300px; text-align: center; }
+.title { font-weight: 650; font-size: 16px; margin-bottom: 12px; }
+.sub { color: #59625d; font-size: 12px; margin-top: 8px; }
+.bar { height: 6px; background: #d9dedb; border-radius: 3px; overflow: hidden; }
+#load-bar { height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+
+#hud-top { max-width: calc(100vw - 340px); position: fixed; top: max(12px, env(safe-area-inset-top)); left: var(--pad); background: var(--paper); border-radius: 10px; padding: 8px 12px; box-shadow: 0 2px 12px rgba(0,0,0,.12); z-index: 10; pointer-events: none; }
+#hud-top .name { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: #59625d; }
+#hud-top .room { font-weight: 650; font-size: 16px; }
+
+#minimap { position: fixed; top: max(12px, env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); width: 300px; height: 180px; background: var(--paper); border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,.12); z-index: 10; cursor: pointer; }
+
+#toolbar { position: fixed; left: 50%; transform: translateX(-50%); bottom: max(14px, env(safe-area-inset-bottom)); display: flex; gap: 6px; align-items: center; background: var(--paper); padding: 6px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,.16); z-index: 10; max-width: calc(100vw - 24px); overflow-x: auto; }
+#toolbar button { border: 0; background: transparent; color: var(--ink); font: inherit; font-weight: 550; padding: 8px 11px; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 56px; white-space: nowrap; }
+#toolbar button span { font-size: 16px; line-height: 1; }
+#toolbar button:hover { background: rgba(0,0,0,.06); }
+#toolbar button.on { background: var(--accent); color: #fff; }
+#layers { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(max(14px, env(safe-area-inset-bottom)) + 74px); background: var(--paper); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.16); padding: 6px; z-index: 12; display: flex; flex-direction: column; min-width: 170px; }
+#layers .tg { border: 0; background: transparent; font: inherit; font-weight: 550; color: var(--ink); text-align: left; padding: 9px 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+#layers .tg:hover { background: rgba(0,0,0,.06); }
+#layers .tg i { width: 30px; height: 18px; border-radius: 9px; background: #c8cdca; position: relative; flex: none; transition: background .15s; }
+#layers .tg i::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: left .15s; }
+#layers .tg.on i { background: var(--accent); }
+#layers .tg.on i::after { left: 14px; }
+
+#crosshair { position: fixed; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; z-index: 9; pointer-events: none; display: none; }
+#crosshair::before, #crosshair::after { content: ""; position: absolute; background: rgba(255,255,255,.9); box-shadow: 0 0 2px rgba(0,0,0,.6); }
+#crosshair::before { left: 6px; top: 0; width: 2px; height: 14px; }
+#crosshair::after { top: 6px; left: 0; height: 2px; width: 14px; }
+body.measuring #crosshair, body.locked #crosshair { display: block; }
+
+#measure-label { position: fixed; z-index: 11; transform: translate(-50%, -130%); background: #111; color: #fff; font-weight: 650; padding: 4px 8px; border-radius: 6px; pointer-events: none; font-variant-numeric: tabular-nums; }
+#hint { position: fixed; left: 50%; bottom: 92px; transform: translateX(-50%); background: rgba(20,24,22,.82); color: #fff; padding: 8px 12px; border-radius: 8px; z-index: 11; pointer-events: none; max-width: calc(100vw - 32px); text-align: center; }
+.hidden { display: none !important; }
+
+#joystick { position: fixed; left: max(24px, env(safe-area-inset-left)); bottom: calc(max(14px, env(safe-area-inset-bottom)) + 84px); width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,.28); border: 2px solid rgba(255,255,255,.65); z-index: 12; touch-action: none; }
+#stick { position: absolute; left: 35px; top: 35px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,.9); box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+
+#tour-bar { position: fixed; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(0,0,0,.12); z-index: 11; }
+#tour-progress { height: 100%; width: 0; background: var(--accent); }
+
+#help { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,.35); z-index: 40; }
+#help h2 { margin: 0 0 10px; font-size: 18px; }
+#help p { margin: 8px 0; }
+#help button { margin-top: 10px; border: 0; background: var(--accent); color: #fff; font: inherit; font-weight: 600; padding: 9px 16px; border-radius: 9px; cursor: pointer; }
+kbd { display: inline-block; border: 1px solid #c8cdca; border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font: 12px ui-monospace, Menlo, monospace; background: #fff; margin: 0 1px; }
+
+#hud-top .room { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 640px) {
+  #minimap { width: 160px; height: 96px; }
+  #hud-top { max-width: calc(100vw - 196px); padding: 6px 10px; }
+  #hud-top .room { font-size: 14px; white-space: normal; }
+  #toolbar { gap: 2px; padding: 5px; }
+  #toolbar button { min-width: 0; padding: 7px 8px; font-size: 11px; }
+}
