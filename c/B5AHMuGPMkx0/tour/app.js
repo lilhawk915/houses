@@ -107,7 +107,7 @@ houseRoot.traverse((o) => {
     m.vertexColors = false;
     if (meta) {
       if (!lmCache[g]) {
-        const t = texLoader.load(`./assets/${meta.file}`);
+        const t = texLoader.load(`./assets/${(isTouch && meta.mfile) || meta.file}`);   // phones get the half-size copy
         t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.channel = 1; t.anisotropy = 4;
         lmCache[g] = t;
       }
