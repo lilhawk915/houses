@@ -113,6 +113,7 @@ document.querySelectorAll('.grid figure a').forEach(a=>a.addEventListener('click
 lb.querySelector('.x').onclick=()=>lb.classList.remove('on');
 lb.querySelector('.p').onclick=()=>{i=(i+set.length-1)%set.length;show();};lb.querySelector('.n').onclick=()=>{i=(i+1)%set.length;show();};
 lb.addEventListener('click',ev=>{if(ev.target===lb)lb.classList.remove('on');});
+let tx=null;lb.addEventListener('touchstart',ev=>tx=ev.touches[0].clientX,{passive:true});lb.addEventListener('touchend',ev=>{if(tx===null)return;const dx=ev.changedTouches[0].clientX-tx;if(Math.abs(dx)>40)lb.querySelector(dx<0?'.n':'.p').click();tx=null;});
 addEventListener('keydown',ev=>{if(!lb.classList.contains('on'))return;if(ev.key==='Escape')lb.classList.remove('on');if(ev.key==='ArrowRight')lb.querySelector('.n').click();if(ev.key==='ArrowLeft')lb.querySelector('.p').click();});
 // on buildlegacydevelopments.com: tell Blake what was looked at, and send change requests straight to him
 const LDH={ajax:"",code:"",nonce:"",t:""},WP=LDH.ajax.indexOf('http')===0,sent={};
