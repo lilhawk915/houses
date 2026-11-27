@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><title>The Mowen · Troy Young | Legacy Developments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bitter:wght@500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--cedar:#96562A;--cedar-deep:#7E4820;--cedar-tint:#F3E7DB;--oak:#C9A87C;--paper:#FBF8F3;--ink:#17191C;--stone:#6E6A63;--line:#E6DFD3;--white:#fff;
+--disp:'Bitter',Georgia,serif;--body:'Archivo',Helvetica,Arial,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--cedar)}
+.wrap{max-width:1080px;margin:auto;padding:0 16px}
+header{position:sticky;top:0;z-index:5;background:rgba(251,248,243,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:20px;height:56px}
+.brand{font-family:var(--disp);font-weight:700;font-size:17px;white-space:nowrap}
+nav{margin-left:auto;display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+nav a{color:var(--stone);text-decoration:none;font-size:14px;white-space:nowrap}nav a:hover{color:var(--ink)}
+.hero{position:relative;min-height:min(86vh,780px);display:flex;align-items:flex-end;background:#3a3631 center/cover no-repeat;color:#fff}
+.hero.nohero{background:linear-gradient(160deg,#2b2723,#5b4634)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 35%,rgba(0,0,0,.66))}
+.hero .wrap{position:relative;z-index:1;width:100%;padding-bottom:40px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--cedar);margin:0 0 6px}
+.hero .kicker{color:#fff;opacity:.9}.hero h1,.hero p{text-shadow:0 1px 18px rgba(0,0,0,.45)}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(34px,6vw,64px);line-height:1.05;margin:0}
+.lede{font-size:clamp(17px,2.2vw,21px);margin:14px 0 0;opacity:.95}
+.intro{max-width:620px;margin:12px 0 0;opacity:.9;font-size:17px}
+.rise{opacity:0;transform:translateY(14px);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+.d1{animation-delay:.15s}.d2{animation-delay:.45s}.d3{animation-delay:.7s}.d4{animation-delay:.95s}
+@keyframes rise{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none}}
+.hp{margin-top:18px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.hp b{font-family:var(--disp);font-size:30px}.hp span{opacity:.85}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn{display:inline-block;background:var(--cedar);color:#fff;text-decoration:none;font-weight:600;padding:13px 20px;border-radius:10px;border:2px solid var(--cedar)}
+.btn:hover{background:var(--cedar-deep);border-color:var(--cedar-deep)}
+button.btn{font:inherit;cursor:pointer}.btn[hidden]{display:none}.btn.ghost{background:transparent;color:var(--cedar)}.btn.light{background:#fff;color:var(--ink);border-color:#fff}
+section{padding:64px 0 8px}
+h2{font-family:var(--disp);font-weight:700;font-size:clamp(26px,3.6vw,36px);margin:0 0 18px;line-height:1.15}
+h3{font-family:var(--disp);font-size:20px;margin:34px 0 6px}
+.note p{font-family:var(--disp);font-size:22px;line-height:1.45;margin:0}.note .sig{font-size:17px;color:var(--stone);margin-top:10px}
+.tourcard{position:relative;display:block;border-radius:14px;overflow:hidden;background:#2b2723;min-height:260px;color:#fff;text-decoration:none}
+.tourcard img{width:100%;display:block;aspect-ratio:16/8;object-fit:cover;filter:brightness(.62)}
+.tourcard .ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;gap:8px}
+.tourcard .play{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.94);color:var(--cedar);display:grid;place-items:center;font-size:28px;padding-left:5px}
+.tourcard b{font-family:var(--disp);font-size:clamp(22px,3vw,30px)}.tourcard small{max-width:520px;opacity:.9;font-size:15px}
+.looks{color:var(--stone);font-size:15px}.looks a{margin:0 4px}
+video{width:100%;border-radius:14px;background:#000;display:block}
+.chaps{display:flex;flex-wrap:wrap;gap:8px}.chaps button{font:inherit;font-size:15px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;cursor:pointer;color:var(--ink);display:flex;gap:8px;align-items:baseline}
+.chaps button small{color:var(--stone);font-size:12px}.chaps button.on{background:var(--ink);color:#fff;border-color:var(--ink)}.chaps button.on small{color:#ddd}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+figure{margin:0}figure img{width:100%;display:block;border-radius:10px;aspect-ratio:16/9;object-fit:cover;background:#ddd}
+figcaption{font-size:14px;color:var(--stone);padding:6px 2px}
+.plan{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.plan img{width:100%;display:block}
+.small{font-size:14px;color:var(--stone)}
+.price{background:var(--ink);color:#fff;border-radius:14px;padding:24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
+.price .big{font-family:var(--disp);font-size:clamp(40px,7vw,60px);font-weight:700;display:block;line-height:1}
+.price .lbl{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--oak)}
+.price .meta{font-size:14px;opacity:.85}.price a{color:var(--oak)}
+.warn{background:#FCEBDD;border-left:4px solid var(--cedar);padding:10px 14px;border-radius:6px;margin:14px 0 0}
+.ok{color:var(--stone);margin:10px 0 0;font-size:15px}
+.tbl{width:100%;border-collapse:collapse;margin-top:8px}.tbl td{padding:10px 4px;border-bottom:1px solid var(--line)}
+.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:15px}.tot td{font-weight:700;border-bottom:0}
+.list{list-style:none;padding:0;margin:8px 0 0}.list li{padding:12px 0;border-bottom:1px solid var(--line)}
+.list b{display:block}.list span{color:var(--stone);font-size:15px;display:block}.list .it{color:var(--ink);font-size:16px}
+.list.two{columns:2 340px;column-gap:36px}.list.two li{break-inside:avoid}
+h4{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--cedar);margin:22px 0 2px}
+.facts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:8px}
+.facts-grid div{background:#fff;padding:12px 14px}.facts-grid span{display:block;font-size:13px;color:var(--stone)}.facts-grid b{font-size:17px}
+.quality{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:8px}
+.quality .q{background:var(--cedar-tint);border-radius:12px;padding:14px 16px}.quality b{display:block;font-family:var(--disp);font-size:17px}.quality span{font-size:15px;color:#4a3a2c}
+footer{margin-top:64px;border-top:1px solid var(--line);padding:24px 0 100px;color:var(--stone);font-size:14px}
+.fab{position:fixed;right:16px;bottom:max(16px,env(safe-area-inset-bottom));z-index:6;background:var(--cedar);color:#fff;text-decoration:none;font-weight:700;padding:14px 20px;border-radius:999px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+#lb{position:fixed;inset:0;background:rgba(10,10,10,.94);display:none;z-index:10;align-items:center;justify-content:center;flex-direction:column}
+#lb.on{display:flex}#lb img{max-width:96vw;max-height:84vh;border-radius:6px}#lb p{color:#ddd;margin:10px}
+#lb button{position:absolute;top:50%;background:none;border:0;color:#fff;font-size:42px;cursor:pointer;padding:16px}#lb .p{left:4px}#lb .n{right:4px}#lb .x{top:8px;right:8px;font-size:30px}
+@media (max-width:640px){body{font-size:16px}.grid{grid-template-columns:1fr}section{padding-top:48px}.brand{font-size:15px}nav{gap:14px}}
+@media print{header,.fab,.tourcard,video{display:none}.hero{min-height:0;color:var(--ink);background:none!important}.hero::after{display:none}}
+</style></head><body>
+<header><div class="wrap"><span class="brand">Legacy Developments</span><nav><a href="#tour">3D tour</a><a href="#video">Video</a><a href="#photos">Photos</a><a href="#plan">Floor plan</a><a href="#estimate">What&#x27;s in the price</a></nav></div></header>
+<div class="hero" style="background-image:url(media/01_front_exterior.jpg)"><div class="wrap">
+<p class="kicker rise">Prepared for Troy Young</p><h1 class="rise d1">Welcome to your new home, Troy.</h1>
+<p class="lede rise d2">The Mowen · 56 x 30 house on a full basement (unfinished) · 30 x 50 garage · front porch 56 x 8</p>
+<p class="intro rise d3">We made this page so you can walk through your home before we break ground. Take the 3D tour, watch the video, and see every room the way you'll live in it.</p>
+<div class="btns rise d4"><a class="btn light" href="tour/">▶ Start the 3D tour</a><a class="btn ghost" style="color:#fff;border-color:rgba(255,255,255,.7)" href="#estimate">What's in the price</a></div>
+</div></div>
+<section id="tour"><div class="wrap"><p class=kicker>Interactive</p><h2>Walk through your house</h2>
+<a class="tourcard" href="tour/"><img src="media/01_front_exterior.jpg" alt="">
+<span class="ov"><span class="play">▶</span><b>Start the 3D tour</b><small>It walks you room by room, then shows the whole house from above.
+On a phone: drag to look, use the circle to walk.</small></span></a>
+</div></section>
+<section id="video"><div class="wrap"><h2>Walkthrough video</h2><video id="wv" src="media/walkthrough.mp4" controls playsinline preload="metadata" poster="media/01_front_exterior.jpg"></video><p class="small" style="margin:14px 0 6px">Skip to a room:</p><div class="chaps"><button type="button" data-t="0.0">Outside<small>0:00</small></button><button type="button" data-t="13.4">Living Room<small>0:13</small></button><button type="button" data-t="40.4">Kitchen<small>0:40</small></button><button type="button" data-t="47.6">Master Bedroom<small>0:47</small></button><button type="button" data-t="58.8">Whole house<small>0:58</small></button></div></div></section>
+<section id="photos"><div class="wrap"><h2>Photos</h2><div class="grid"><figure><a href="media/01_front_exterior.jpg" data-cap="Front"><img src="media/thumb/01_front_exterior.jpg" alt="Front" loading="lazy"></a><figcaption>Front</figcaption></figure><figure><a href="media/02_rear_exterior.jpg" data-cap="Back"><img src="media/thumb/02_rear_exterior.jpg" alt="Back" loading="lazy"></a><figcaption>Back</figcaption></figure><figure><a href="media/03_living_kitchen.jpg" data-cap="Living &amp; Kitchen"><img src="media/thumb/03_living_kitchen.jpg" alt="Living &amp; Kitchen" loading="lazy"></a><figcaption>Living &amp; Kitchen</figcaption></figure><figure><a href="media/04_kitchen.jpg" data-cap="Kitchen"><img src="media/thumb/04_kitchen.jpg" alt="Kitchen" loading="lazy"></a><figcaption>Kitchen</figcaption></figure><figure><a href="media/05_bedroom.jpg" data-cap="Bedroom"><img src="media/thumb/05_bedroom.jpg" alt="Bedroom" loading="lazy"></a><figcaption>Bedroom</figcaption></figure><figure><a href="media/06_bath.jpg" data-cap="Bath"><img src="media/thumb/06_bath.jpg" alt="Bath" loading="lazy"></a><figcaption>Bath</figcaption></figure><figure><a href="media/07_front_dusk.jpg" data-cap="Evening"><img src="media/thumb/07_front_dusk.jpg" alt="Evening" loading="lazy"></a><figcaption>Evening</figcaption></figure></div><p class="small">Renderings, drawn from your plans. Furniture and decor are shown to give a sense of scale and are not included.</p></div></section>
+<section id="plan"><div class="wrap"><h2>Floor plan</h2><div class="plan"><a href="media/plan.png"><img src="media/plan.png" alt="Floor plan"></a></div></div></section>
+<section id="estimate"><div class="wrap"><p class=kicker>Initial estimate · not a contract</p><h2>What&#x27;s in the price</h2>
+<div class="price"><div><span class="big">$425,000</span><span class="lbl">to build, on your site</span></div>
+<div class="meta">Prepared for Troy Young · November 26, 2026 · <a href="media/estimate.pdf" download>Download the PDF</a></div></div>
+<p class="ok">Holds until December 26, 2026.</p>
+
+
+<h3>Built the Legacy way</h3><div class="quality"><div class=q><b>Amish hand-built cabinetry</b><span>Rather than builder-grade boxes.</span></div><div class=q><b>Real timber and real stone</b><span>Where you see them — not wrapped substitutes.</span></div><div class=q><b>A fixed price before ground breaks</b><span>Set after design, in a written agreement — not a number that moves.</span></div><div class=q><b>Honest allowances</b><span>Priced at what things actually cost here, not lowball numbers that make a contract look cheap.</span></div><div class=q><b>Your builder on the job</b><span>Blake on your jobsite and on the end of the phone, not a sales office.</span></div></div>
+<h3>What is included</h3><p class="small">Everything it takes to build the house below, start to finish.</p><ul class='list two'></ul>
+<h3>Allowances carried</h3><p class="small">These are the items you choose later. They are carried <i>inside</i> the price above — not added to it.</p>
+<table class="tbl"><tr><td>Kitchen cabinets and tops</td><td class=num>$10,000</td></tr><tr><td>Bathrooms, both (tile shower in the master)</td><td class=num>$17,000</td></tr><tr><td>Appliances</td><td class=num>$3,500</td></tr><tr><td>Flooring, main floor</td><td class=num>$5,544</td></tr><tr><td>Lights and fans</td><td class=num>$1,500</td></tr><tr><td>Front door</td><td class=num>$2,200</td></tr><tr><td>Cedar beams</td><td class=num>$3,500</td></tr><tr class="tot"><td>Total carried</td><td class=num>$43,244</td></tr></table>
+<h3>How this number works</h3><ul class="list"></ul>
+<h3>Not included</h3><p class="small">These sit outside the price. Everything else needed to build the house is in it.</p><ul class='list two'><li><b>The septic system</b><span>In full: design, permit and install. You are handling it.</span></li><li><b>Finishing the basement</b><span>Walls, floor and slab are included. Framing, drywall, flooring and baths down there are not.</span></li><li><b>Rock or bad soil found when digging</b><span>Priced in writing if we hit it, before the extra work is done.</span></li><li><b>Driveway past 100 feet</b><span>The first 100 feet are included.</span></li><li><b>The lot</b><span>And any survey, clearing past the house pad, or loan and closing costs.</span></li></ul></div></section>
+<footer><div class="wrap">Legacy Developments · Blake Bradley · (937) 779-2744 · blake@buildlegacydevelopments.com · buildlegacydevelopments.com<br>Built for generations</div></footer>
+<a class="fab" href="tel:9377792744">Call Blake</a>
+<div id="lb" role="dialog" aria-modal="true"><button class="x" aria-label="Close">×</button><button class="p" aria-label="Previous">‹</button><img alt=""><p></p><button class="n" aria-label="Next">›</button></div>
+<script>
+// lightbox
+const lb=document.getElementById('lb'),li=lb.querySelector('img'),lp=lb.querySelector('p');let set=[],i=0;
+function show(){li.src=set[i].href;lp.textContent=set[i].dataset.cap||'';}
+document.querySelectorAll('.grid figure a').forEach(a=>a.addEventListener('click',ev=>{ev.preventDefault();set=[...document.querySelectorAll('.grid figure a')];i=set.indexOf(a);show();lb.classList.add('on');}));
+lb.querySelector('.x').onclick=()=>lb.classList.remove('on');
+lb.querySelector('.p').onclick=()=>{i=(i+set.length-1)%set.length;show();};lb.querySelector('.n').onclick=()=>{i=(i+1)%set.length;show();};
+lb.addEventListener('click',ev=>{if(ev.target===lb)lb.classList.remove('on');});
+addEventListener('keydown',ev=>{if(!lb.classList.contains('on'))return;if(ev.key==='Escape')lb.classList.remove('on');if(ev.key==='ArrowRight')lb.querySelector('.n').click();if(ev.key==='ArrowLeft')lb.querySelector('.p').click();});
+// on buildlegacydevelopments.com: tell Blake what was looked at, and send change requests straight to him
+const LDH={ajax:"",code:"",nonce:"",t:""},WP=LDH.ajax.indexOf('http')===0,sent={};
+function ping(e,d,again){if(!WP||(!again&&sent[e]))return;sent[e]=1;const f=new FormData();f.append('action','ld_home_ping');f.append('code',LDH.code);f.append('nonce',LDH.nonce);f.append('event',e);if(d!==undefined)f.append('detail',String(d));navigator.sendBeacon(LDH.ajax,f);}
+document.querySelectorAll('a[href*="tour"]').forEach(a=>a.addEventListener('click',()=>ping('tour',a.textContent.trim().slice(0,40))));
+document.querySelectorAll('video').forEach(v=>v.addEventListener('play',()=>ping('video')));
+const wv=document.getElementById('wv'),cb=[...document.querySelectorAll('.chaps button')];
+if(wv&&cb.length){cb.forEach(b=>b.onclick=()=>{wv.currentTime=+b.dataset.t;wv.play();});
+wv.addEventListener('timeupdate',()=>{let k=0;cb.forEach((b,i)=>{if(wv.currentTime>=+b.dataset.t-0.05)k=i;});cb.forEach((b,i)=>b.classList.toggle('on',i===k));});}
+document.querySelectorAll('a[href$=".pdf"]').forEach(a=>a.addEventListener('click',()=>ping('pdf')));
+document.querySelectorAll('a[href^="tel:"]').forEach(a=>a.addEventListener('click',()=>ping('call',0,1)));
+document.querySelectorAll('a[href^="sms:"]').forEach(a=>a.addEventListener('click',()=>ping('text',0,1)));
+document.querySelectorAll('a[href^="mailto:"]').forEach(a=>a.addEventListener('click',()=>ping('email',0,1)));
+const est=document.getElementById('estimate');
+if(est&&'IntersectionObserver' in window){const io=new IntersectionObserver(es=>{es.forEach(x=>{if(x.isIntersecting&&x.intersectionRatio>0.25){ping('estimate');io.disconnect();}});},{threshold:[0.25]});io.observe(est);}
+let shown=Date.now();
+document.addEventListener('visibilitychange',()=>{if(document.hidden){ping('time',Math.round((Date.now()-shown)/1000),1);}else shown=Date.now();});
+</script></body></html>
