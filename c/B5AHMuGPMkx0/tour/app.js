@@ -20,9 +20,20 @@ function fail(why) {
   s.innerHTML = why + "<br><br>Try Chrome or Safari with graphics acceleration on (Chrome: Settings → System → " +
     "\"Use graphics acceleration when available\"), or open the link on your phone.";
   if (b) b.style.display = "none";
+  if (!document.getElementById("load-retry")) s.insertAdjacentHTML("afterend", '<button id="load-retry" style="margin-top:14px;padding:8px 16px;border-radius:8px;border:0;background:#3e4a44;color:#fff;font:inherit;cursor:pointer" onclick="location.reload()">Try again</button>');
 }
-addEventListener("error", (e) => fail("Something went wrong while loading (" + (e.message || "error") + ")."));
-addEventListener("unhandledrejection", (e) => fail("A file didn't load (" + ((e.reason && e.reason.message) || e.reason || "network") + ")."));
+// only our own scripts count: browser extensions and ResizeObserver notices also fire window errors, and must not kill the tour
+const ours = (f) => !!f && f.startsWith(location.origin) && !/extension:/.test(f);
+addEventListener("error", (e) => {
+  if (!ours(e.filename) || /ResizeObserver/.test(e.message || "")) { console.warn("[p2w] ignored outside error:", e.message, e.filename); return; }
+  fail("Something went wrong while loading (" + (e.message || "error") + " — " + e.filename.split("/").pop() + ":" + e.lineno + ").");
+});
+addEventListener("unhandledrejection", (e) => {
+  const r = e.reason, st = (r && r.stack) || "";
+  if (st && !st.includes(location.origin)) { console.warn("[p2w] ignored outside rejection:", r); return; }
+  if (r && r.name === "NotAllowedError") return;      // autoplay blocked for the music: harmless
+  fail("A file didn't load (" + ((r && r.message) || r || "network") + ").");
+});
 
 // ---------------------------------------------------------------- renderer / scene
 const canvas = $("c");
