@@ -540,20 +540,39 @@ function drawMinimap() {
   c.fillStyle = "#dc3c28"; c.strokeStyle = "#fff"; c.lineWidth = 2; c.beginPath(); c.arc(px, py, 5, 0, Math.PI * 2); c.fill(); c.stroke();
 }
 addEventListener("resize", () => { mmT = null; });
-mm.addEventListener("click", (e) => {
-  const r = mm.getBoundingClientRect(); const [x, y] = mmT.toPlan(e.clientX - r.left, e.clientY - r.top);
-  const room = roomAt(x, y);
-  if (!room) return;
-  // jump to the room's label point facing its longest open direction (toward the room center)
+// jump to a room: stand in a corner, face the room center (minimap click, Go-to menu, #room= links)
+function jumpToRoom(room) {
   const xs = room.polygon.map((p) => p[0]), ys = room.polygon.map((p) => p[1]);
   const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
   let [tx, ty] = collide(room.label[0], room.label[1]);
-  // stand near a wall corner of the room so the view takes it in
   const corner = [Math.min(...xs) + 18, Math.min(...ys) + 18];
   if (inPoly(corner[0], corner[1], room.polygon)) [tx, ty] = collide(...corner);
-  me.x = tx; me.y = ty; me.yaw = Math.atan2(cy - ty, cx - tx); me.pitch = -0.05;
+  jumpTo(tx, ty, Math.atan2(cy - ty, cx - tx), room.name);
+}
+function jumpTo(x, y, yaw, label) {
+  me.x = x; me.y = y; me.yaw = yaw; me.pitch = -0.05;
   eyeZ = floorAt(me.x, me.y) + data.eye;
-  setMode("walk"); hint(room.name);
+  setMode("walk"); applyCamera(); if (label) hint(label);
+}
+const fp = data.footprint, frontX = doorMetaX();
+function doorMetaX() { const d = (typeof lmMeta !== "undefined" && lmMeta.__door__) || null; return d ? d.hinge[0] : (data.footprint[0] + data.footprint[2]) / 2; }
+const PLACES = [
+  { name: "Front yard", go: () => jumpTo(frontX + 40, Math.min(data.porch[1], fp[1]) - 640, Math.PI / 2, "Front yard") },
+  { name: "Front porch", go: () => jumpTo(frontX, (data.porch[1] + fp[1]) / 2, Math.PI / 2, "Front porch") },
+  ...data.rooms.filter((r) => !/closet|pantry|mech|w\.?i\.?c|linen|vest|master hall|primary hall/i.test(r.name))
+    .filter((r, i, a) => a.findIndex((q) => q.name === r.name) === i)
+    .map((r) => ({ name: r.name.replace("Living / Dining / Kitchen", "Living / Kitchen").replace("Master ", "Primary "), go: () => jumpToRoom(r) })),
+  { name: "Whole house (dollhouse)", go: () => setMode("doll") },
+];
+$("goto").innerHTML = PLACES.map((p, i) => `<button data-i="${i}">${p.name.replace(/[<>&]/g, "")}</button>`).join("");
+$("goto").querySelectorAll("button").forEach((b) => b.onclick = (e) => { e.stopPropagation(); PLACES[+b.dataset.i].go(); $("goto").classList.add("hidden"); $("btn-goto").classList.remove("on"); });
+$("btn-goto").onclick = (e) => { e.stopPropagation(); $("goto").classList.toggle("hidden"); $("btn-goto").classList.toggle("on", !$("goto").classList.contains("hidden")); };
+addEventListener("pointerdown", (e) => { if (!$("goto").contains(e.target) && e.target.closest("#btn-goto") === null) { $("goto").classList.add("hidden"); $("btn-goto").classList.remove("on"); } });
+{ const m = /[#&]room=([^&]+)/.exec(location.hash); if (m) { const want = decodeURIComponent(m[1]).toLowerCase(); const p = PLACES.find((q) => q.name.toLowerCase().startsWith(want)); if (p) setTimeout(p.go, 0); } }
+mm.addEventListener("click", (e) => {
+  const r = mm.getBoundingClientRect(); const [x, y] = mmT.toPlan(e.clientX - r.left, e.clientY - r.top);
+  const room = roomAt(x, y);
+  if (room) jumpToRoom(room);
 });
 
 // ---------------------------------------------------------------- front door: swings open on the tour, and when you walk up

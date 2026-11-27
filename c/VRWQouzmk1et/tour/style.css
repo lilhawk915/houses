@@ -104,3 +104,8 @@ kbd { display: inline-block; border: 1px solid #c8cdca; border-bottom-width: 2px
 #contact-sheet a { color: var(--ink); text-decoration: none; padding: 10px 8px; border-radius: 8px; font-weight: 550; }
 #contact-sheet a:hover { background: rgba(0,0,0,.06); }
 @media (max-width: 900px) { #styles { top: auto; bottom: calc(max(14px, env(safe-area-inset-bottom)) + 74px); } body.has-client #stop-card { bottom: calc(max(14px, env(safe-area-inset-bottom)) + 130px); } }
+
+#goto { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(max(14px, env(safe-area-inset-bottom)) + 74px); background: var(--paper); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.16); padding: 6px; z-index: 12; display: grid; grid-template-columns: repeat(2, minmax(150px, 1fr)); gap: 2px; max-height: 60vh; overflow-y: auto; max-width: calc(100vw - 24px); }
+#goto.hidden { display: none; }
+#goto button { border: 0; background: transparent; font: inherit; font-weight: 550; color: var(--ink); text-align: left; padding: 10px 12px; border-radius: 8px; cursor: pointer; }
+#goto button:hover { background: rgba(0,0,0,.06); }
